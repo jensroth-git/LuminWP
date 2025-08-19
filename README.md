@@ -1,7 +1,7 @@
 # Lumin - Live Wallpaper SDK 
 ![Logo](images/Logo.png)
 
-This library allows users to create dynamic wallpapers on Windows, macOS and Linux
+This library allows users to create dynamic wallpapers on Windows, macOS and Linux   
 using the game or render engine of your choice!
 
 ## Features
