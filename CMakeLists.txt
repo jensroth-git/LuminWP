@@ -1,11 +1,9 @@
 cmake_minimum_required(VERSION 3.20)
 
-project(luminWP
+project(LuminWallpaper
   VERSION 1.0.0
   DESCRIPTION "Universal Live Wallpaper SDK"
   LANGUAGES C CXX)
-
-set(LWP_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Only turn on ObjC/ObjCXX on Apple, so Windows stays happy
 if(APPLE)
@@ -31,9 +29,9 @@ endif()
 
 # Library target.
 add_library(${PROJECT_NAME} STATIC
-  $<$<PLATFORM_ID:Windows>:${LWP_ROOT_PATH}/src/platform/windows/desktop_integration_windows.cpp>
-  $<$<PLATFORM_ID:Darwin>:${LWP_ROOT_PATH}/src/platform/macos/desktop_integration_macos.mm>
-  $<$<PLATFORM_ID:Linux>:${LWP_ROOT_PATH}/src/platform/linux/desktop_integration_linux.cpp>
+  $<$<PLATFORM_ID:Windows>:src/platform/windows/desktop_integration_windows.cpp>
+  $<$<PLATFORM_ID:Darwin>:src/platform/macos/desktop_integration_macos.mm>
+  $<$<PLATFORM_ID:Linux>:src/platform/linux/desktop_integration_linux.cpp>
 )
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_20)
@@ -42,6 +40,8 @@ target_include_directories(${PROJECT_NAME} PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
+
+set_property(TARGET ${PROJECT_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 # Platform links
 if(WIN32)
@@ -96,10 +96,10 @@ endif()
 
 # -------- Packaging: install + Config files --------
 include(CMakePackageConfigHelpers)
-set(LWP_INSTALL_CONFIGDIR ${CMAKE_INSTALL_LIBDIR}/cmake/luminWP)
+set(LWP_INSTALL_CONFIGDIR ${CMAKE_INSTALL_LIBDIR}/cmake/LuminWallpaper)
 
 install(TARGETS ${PROJECT_NAME}
-  EXPORT luminWPTargets
+  EXPORT LuminWallpaperTargets
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
@@ -108,27 +108,27 @@ install(TARGETS ${PROJECT_NAME}
 
 install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
-install(EXPORT luminWPTargets
+install(EXPORT LuminWallpaperTargets
   NAMESPACE LWP::
   DESTINATION ${LWP_INSTALL_CONFIGDIR}
-  FILE luminWPTargets.cmake
+  FILE LuminWallpaperTargets.cmake
 )
 
 write_basic_package_version_file(
-  ${CMAKE_CURRENT_BINARY_DIR}/luminWPConfigVersion.cmake
+  ${CMAKE_CURRENT_BINARY_DIR}/LuminWallpaperConfigVersion.cmake
   VERSION ${PROJECT_VERSION}
   COMPATIBILITY SameMajorVersion
 )
 
 configure_package_config_file(
-  ${CMAKE_CURRENT_LIST_DIR}/cmake/LuminWPConfig.cmake.in
-  ${CMAKE_CURRENT_BINARY_DIR}/luminWPConfig.cmake
+  ${CMAKE_CURRENT_LIST_DIR}/cmake/LuminWallpaperConfig.cmake.in
+  ${CMAKE_CURRENT_BINARY_DIR}/LuminWallpaperConfig.cmake
   INSTALL_DESTINATION ${LWP_INSTALL_CONFIGDIR}
 )
 
 install(FILES
-  ${CMAKE_CURRENT_BINARY_DIR}/luminWPConfig.cmake
-  ${CMAKE_CURRENT_BINARY_DIR}/luminWPConfigVersion.cmake
+  ${CMAKE_CURRENT_BINARY_DIR}/LuminWallpaperConfig.cmake
+  ${CMAKE_CURRENT_BINARY_DIR}/LuminWallpaperConfigVersion.cmake
   DESTINATION ${LWP_INSTALL_CONFIGDIR}
 )
 

@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include <lumin.h>
-#include "raylib.h"
+#include <raylib.h>
 
 int main()
 {
