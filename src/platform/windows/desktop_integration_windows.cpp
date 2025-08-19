@@ -19,7 +19,7 @@
 // For PathFindFileNameW
 #include <shlwapi.h>
 
-namespace LuminWP
+namespace lumin
 {
 	// Global variables to hold handles within the desktop hierarchy
 	// g_progmanWindowHandle : top level Program Manager window
@@ -546,6 +546,6 @@ namespace LuminWP
 		MessageBoxA(NULL, message.c_str(), title.c_str(), MB_OK | MB_ICONINFORMATION);
 	}
 
-} // namespace LuminWP
+} // namespace lumin
 
 #endif // _WIN32

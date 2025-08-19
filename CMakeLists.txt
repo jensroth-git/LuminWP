@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 
-project(LuminWallpaper
+project(lumin
   VERSION 1.0.0
   DESCRIPTION "Universal Live Wallpaper SDK"
   LANGUAGES C CXX)
@@ -96,10 +96,10 @@ endif()
 
 # -------- Packaging: install + Config files --------
 include(CMakePackageConfigHelpers)
-set(LWP_INSTALL_CONFIGDIR ${CMAKE_INSTALL_LIBDIR}/cmake/LuminWallpaper)
+set(LWP_INSTALL_CONFIGDIR ${CMAKE_INSTALL_LIBDIR}/cmake/Lumin)
 
 install(TARGETS ${PROJECT_NAME}
-  EXPORT LuminWallpaperTargets
+  EXPORT LuminTargets
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
@@ -108,27 +108,27 @@ install(TARGETS ${PROJECT_NAME}
 
 install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
-install(EXPORT LuminWallpaperTargets
+install(EXPORT LuminTargets
   NAMESPACE LWP::
   DESTINATION ${LWP_INSTALL_CONFIGDIR}
-  FILE LuminWallpaperTargets.cmake
+  FILE LuminTargets.cmake
 )
 
 write_basic_package_version_file(
-  ${CMAKE_CURRENT_BINARY_DIR}/LuminWallpaperConfigVersion.cmake
+  ${CMAKE_CURRENT_BINARY_DIR}/LuminConfigVersion.cmake
   VERSION ${PROJECT_VERSION}
   COMPATIBILITY SameMajorVersion
 )
 
 configure_package_config_file(
-  ${CMAKE_CURRENT_LIST_DIR}/cmake/LuminWallpaperConfig.cmake.in
-  ${CMAKE_CURRENT_BINARY_DIR}/LuminWallpaperConfig.cmake
+  ${CMAKE_CURRENT_LIST_DIR}/cmake/LuminConfig.cmake.in
+  ${CMAKE_CURRENT_BINARY_DIR}/LuminConfig.cmake
   INSTALL_DESTINATION ${LWP_INSTALL_CONFIGDIR}
 )
 
 install(FILES
-  ${CMAKE_CURRENT_BINARY_DIR}/LuminWallpaperConfig.cmake
-  ${CMAKE_CURRENT_BINARY_DIR}/LuminWallpaperConfigVersion.cmake
+  ${CMAKE_CURRENT_BINARY_DIR}/LuminConfig.cmake
+  ${CMAKE_CURRENT_BINARY_DIR}/LuminConfigVersion.cmake
   DESTINATION ${LWP_INSTALL_CONFIGDIR}
 )
 

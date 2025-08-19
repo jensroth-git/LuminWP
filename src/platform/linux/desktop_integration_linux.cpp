@@ -17,7 +17,7 @@
 
 // Avoid hard dependency on GLFW here; interpret opaque handles directly as X11 Window ids
 
-namespace LuminWP
+namespace lumin
 {
 	// Simple point struct for cursor position
 	struct POINT
@@ -39,7 +39,7 @@ namespace LuminWP
 	{
 		g_display = XOpenDisplay(nullptr);
 		if (!g_display) {
-			fprintf(stderr, "[LuminWP] Failed to open X display\n");
+			fprintf(stderr, "[lumin] Failed to open X display\n");
 			return false;
 		}
 		g_rootWindow = DefaultRootWindow(g_display);
@@ -135,7 +135,7 @@ namespace LuminWP
 		if (!g_display) {
 			g_display = XOpenDisplay(nullptr);
 			if (!g_display) {
-				fprintf(stderr, "[LuminWP] Failed to open X display during configuration\n");
+				fprintf(stderr, "[lumin] Failed to open X display during configuration\n");
 				return;
 			}
 		}
@@ -144,7 +144,7 @@ namespace LuminWP
 		}
 
 		if (!g_engineWindow) {
-			fprintf(stderr, "[LuminWP] Could not obtain valid X11 window from handle\n");
+			fprintf(stderr, "[lumin] Could not obtain valid X11 window from handle\n");
 			return;
 		}
 
@@ -162,7 +162,7 @@ namespace LuminWP
 		}
 
 		if (!windowReady) {
-			fprintf(stderr, "[LuminWP] Warning: Window may not be fully ready, proceeding anyway\n");
+			fprintf(stderr, "[lumin] Warning: Window may not be fully ready, proceeding anyway\n");
 		}
 
 		g_selectedMonitor = monitor;
@@ -182,7 +182,7 @@ namespace LuminWP
 				XGetErrorText(display, event->error_code, errorText, sizeof(errorText));
 				fprintf(
 					stderr,
-					"[LuminWP] X Error in XChangeWindowAttributes: %s (Window: 0x%lx)\n",
+					"[lumin] X Error in XChangeWindowAttributes: %s (Window: 0x%lx)\n",
 					errorText,
 					event->resourceid
 				);
@@ -194,7 +194,7 @@ namespace LuminWP
 		XSetErrorHandler(oldHandler);
 
 		if (result == 0) {
-			fprintf(stderr, "[LuminWP] Failed to set override_redirect attribute\n");
+			fprintf(stderr, "[lumin] Failed to set override_redirect attribute\n");
 			return;
 		}
 
@@ -215,13 +215,13 @@ namespace LuminWP
 			);
 		}
 		else {
-			fprintf(stderr, "[LuminWP] Warning: Could not set window type atoms\n");
+			fprintf(stderr, "[lumin] Warning: Could not set window type atoms\n");
 		}
 
 		// Reparent and position with error checking
 		fprintf(
 			stderr,
-			"[LuminWP] Reparenting window to root, position: %d,%d size: %dx%d\n",
+			"[lumin] Reparenting window to root, position: %d,%d size: %dx%d\n",
 			monitor.x,
 			monitor.y,
 			monitor.width,
@@ -235,7 +235,7 @@ namespace LuminWP
 		// Force synchronization to catch any errors
 		XSync(g_display, False);
 
-		fprintf(stderr, "[LuminWP] Window configuration completed successfully\n");
+		fprintf(stderr, "[lumin] Window configuration completed successfully\n");
 	}
 
 	bool IsMonitorOccluded(const MonitorInfo &monitor, double threshold)
@@ -402,6 +402,6 @@ namespace LuminWP
 		std::fprintf(stderr, "%s: %s\n", title.c_str(), message.c_str());
 	}
 
-} // namespace LuminWP
+} // namespace lumin
 
 #endif // __linux__

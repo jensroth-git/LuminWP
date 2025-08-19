@@ -6,10 +6,10 @@
 int main()
 {
 	// Initializes desktop replacement magic
-	LuminWP::Initialize();
+	lumin::Initialize();
 
 	// Sets up the desktop (-1 is the entire desktop spanning all monitors)
-	LuminWP::MonitorInfo monitorInfo = LuminWP::GetWallpaperTarget(-1);
+	lumin::MonitorInfo monitorInfo = lumin::GetWallpaperTarget(-1);
 
 	// Initialize the raylib window.
 	InitWindow(monitorInfo.width, monitorInfo.height, "Raylib Desktop Demo");
@@ -18,7 +18,7 @@ int main()
 	void *raylibWindowHandle = GetWindowHandle();
 
 	// Reparent the raylib window to the window behind the desktop icons.
-	LuminWP::ConfigureWallpaperWindow(raylibWindowHandle, monitorInfo);
+	lumin::ConfigureWallpaperWindow(raylibWindowHandle, monitorInfo);
 
 	// Now, enter the raylib render loop.
 	SetTargetFPS(60);
@@ -33,16 +33,16 @@ int main()
 	// Main render loop.
 	while (!WindowShouldClose()) {
 		// Update the mouse state of the replacement api.
-		LuminWP::UpdateMouseState();
+		lumin::UpdateMouseState();
 
 		// skip rendering if the wallpaper is occluded more than 95%
-		if (LuminWP::IsMonitorOccluded(monitorInfo, 0.95)) {
+		if (lumin::IsMonitorOccluded(monitorInfo, 0.95)) {
 			std::cout << "Wallpaper is occluded" << std::endl;
 			WaitTime(0.1);
 			continue;
 		}
 
-		if (LuminWP::IsDesktopLocked() ) {
+		if (lumin::IsDesktopLocked() ) {
 			std::cout << "Desktop is locked" << std::endl;
 			// If the desktop is locked, we can skip rendering.
 			// This is useful to avoid unnecessary rendering when the user is not interacting with the desktop.
@@ -70,14 +70,14 @@ int main()
 
 		// Attempt to display the mouse position.
 		// Note: In a wallpaper window (child of WorkerW), input may not be delivered normally.
-		int mouseX = LuminWP::GetMouseX();
-		int mouseY = LuminWP::GetMouseY();
+		int mouseX = lumin::GetMouseX();
+		int mouseY = lumin::GetMouseY();
 
 		// check buttons
-		if (LuminWP::IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
+		if (lumin::IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
 			DrawCircle(mouseX, mouseY, 10, BLUE);
 		}
-		else if (LuminWP::IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) {
+		else if (lumin::IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) {
 			// exit on right click
 			break;
 		}
@@ -93,7 +93,7 @@ int main()
 
 	// Clean up the desktop window.
 	// Restores the original wallpaper.
-	LuminWP::Cleanup();
+	lumin::Cleanup();
 
 	return 0;
 }

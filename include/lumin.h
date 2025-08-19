@@ -3,7 +3,7 @@
 #include <vector>
 
 // Cross-platform desktop integration interface
-namespace LuminWP
+namespace lumin
 {
 	// Structure to hold information about a monitor
 	struct MonitorInfo
@@ -55,4 +55,4 @@ namespace LuminWP
 	bool SupportsMultiMonitor();
 
 	void ShowAlert(const std::string &title, const std::string &message);
-} // namespace LuminWP
+} // namespace lumin

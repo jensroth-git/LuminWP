@@ -9,7 +9,7 @@
 #include <iostream>
 #include <unistd.h>
 
-namespace LuminWP {
+namespace lumin {
     // Global state
     static NSWindow* g_desktopWindow = nil;
     static MonitorInfo g_selectedMonitor = {0, 0, 0, 0};
@@ -354,6 +354,6 @@ namespace LuminWP {
             [alert runModal];
         }
     }
-} // namespace LuminWP
+} // namespace lumin
 
 #endif // __APPLE__ 
