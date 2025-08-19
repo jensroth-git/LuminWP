@@ -13,7 +13,22 @@ This library allows users to create dynamic wallpapers on Windows, macOS and Lin
 ## Getting Started
 
 ### Installation
-TODO...
+Simply add the library to your CMake Config
+```md
+# Specify branch or version
+set(LWP_GIT_TAG main CACHE STRING "Git tag/branch for LuminWallpaper")
+
+# Fetch LuminWallpaper
+FetchContent_Declare(
+  lumin
+  GIT_REPOSITORY https://github.com/jensroth-git/LuminWallpaper.git
+  GIT_TAG ${LWP_GIT_TAG}
+)
+FetchContent_MakeAvailable(lumin)
+
+# Add to target
+target_link_libraries(${PROJECT_NAME} PRIVATE lumin)
+```
 
 ### raylib integration
 TODO...
