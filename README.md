@@ -2,6 +2,7 @@
 ![Logo](images/Logo.png)
 
 This library allows users to create dynamic wallpapers on Windows, macOS and Linux
+using the game or render engine of your choice!
 
 ## Features
 
@@ -13,6 +14,7 @@ This library allows users to create dynamic wallpapers on Windows, macOS and Lin
 ## Getting Started
 
 ### Installation
+
 Simply add the library to your CMake Config
 ```md
 # Pin a tag or branch
@@ -118,4 +120,3 @@ Currently, there are no replacements for keyboard input, which may be added in t
 ## License
 
 This project is licensed under the MIT License.
-
