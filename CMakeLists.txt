@@ -24,25 +24,21 @@ endif()
 
 include(GNUInstallDirs)
 option(LWP_BUILD_EXAMPLES "Build examples" ${PROJECT_IS_TOP_LEVEL})
+
 if(UNIX AND NOT APPLE)
   option(LWP_USE_GLFW "Use GLFW-native handle path on Linux (for raylib/GLFW engines)" ON)
 endif()
 
 # Library target.
-add_library(luminWP STATIC
+add_library(${PROJECT_NAME} STATIC
   $<$<PLATFORM_ID:Windows>:src/platform/windows/desktop_integration_windows.cpp>
   $<$<PLATFORM_ID:Darwin>:src/platform/macos/desktop_integration_macos.mm>
   $<$<PLATFORM_ID:Linux>:src/platform/linux/desktop_integration_linux.cpp>
-  include/lumin.h
 )
 
-add_library(LWP::luminWP ALIAS luminWP)
-target_compile_features(luminWP PUBLIC cxx_std_20)
+target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_20)
 
-# Build as PIC so the static lib can be linked into shared libs cleanly
-set_target_properties(luminWP PROPERTIES POSITION_INDEPENDENT_CODE ON)
-
-target_include_directories(luminWP
+target_include_directories(${PROJECT_NAME}
   PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
@@ -50,10 +46,10 @@ target_include_directories(luminWP
 
 # Platform links
 if(WIN32)
-  target_compile_definitions(luminWP PUBLIC LWP_PLATFORM_WINDOWS)
-  target_link_libraries(luminWP PUBLIC user32 gdi32 shcore shlwapi dwmapi)
+  target_compile_definitions(${PROJECT_NAME} PUBLIC LWP_PLATFORM_WINDOWS)
+  target_link_libraries(${PROJECT_NAME} PUBLIC user32 gdi32 shcore shlwapi dwmapi)
 elseif(APPLE)
-  target_compile_definitions(luminWP PUBLIC LWP_PLATFORM_MACOS)
+  target_compile_definitions(${PROJECT_NAME} PUBLIC LWP_PLATFORM_MACOS)
 
   find_library(COCOA_LIBRARY Cocoa)
   find_library(IOKIT_LIBRARY IOKit)
@@ -63,7 +59,7 @@ elseif(APPLE)
   find_library(COREGRAPHICS_LIBRARY CoreGraphics)
   find_library(COREFOUNDATION_LIBRARY CoreFoundation)
   
-  target_link_libraries(luminWP PUBLIC
+  target_link_libraries(${PROJECT_NAME} PUBLIC
       ${COCOA_LIBRARY}
       ${IOKIT_LIBRARY}
       ${COREVIDEO_LIBRARY}
@@ -73,20 +69,20 @@ elseif(APPLE)
       ${COREFOUNDATION_LIBRARY}
   )
 elseif(UNIX)
-    target_compile_definitions(luminWP PUBLIC LWP_PLATFORM_LINUX)
+    target_compile_definitions(${PROJECT_NAME} PUBLIC LWP_PLATFORM_LINUX)
     if(LWP_USE_GLFW)
-      target_compile_definitions(luminWP PRIVATE LWP_USE_GLFW)
+      target_compile_definitions(${PROJECT_NAME} PRIVATE LWP_USE_GLFW)
     endif()
     find_package(X11 REQUIRED)
     find_package(PkgConfig REQUIRED)
     pkg_check_modules(XRANDR REQUIRED xrandr)
 
-    target_link_libraries(luminWP PUBLIC
+    target_link_libraries(${PROJECT_NAME} PUBLIC
         ${X11_LIBRARIES}
         ${XRANDR_LIBRARIES}
     )
 
-    target_include_directories(luminWP PRIVATE
+    target_include_directories(${PROJECT_NAME} PRIVATE
         ${XRANDR_INCLUDE_DIRS}
         ${X11_INCLUDE_DIR}
     )
@@ -94,16 +90,16 @@ endif()
 
 # Warnings for the lib itself
 if(MSVC)
-  target_compile_options(luminWP PRIVATE /W4 /permissive-)
+  target_compile_options(${PROJECT_NAME} PRIVATE /W4 /permissive-)
 else()
-  target_compile_options(luminWP PRIVATE -Wall -Wextra -Wpedantic)
+  target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic)
 endif()
 
 # -------- Packaging: install + Config files --------
 include(CMakePackageConfigHelpers)
 set(LWP_INSTALL_CONFIGDIR ${CMAKE_INSTALL_LIBDIR}/cmake/luminWP)
 
-install(TARGETS luminWP
+install(TARGETS ${PROJECT_NAME}
   EXPORT luminWPTargets
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
