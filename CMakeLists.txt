@@ -31,17 +31,16 @@ endif()
 
 # Library target.
 add_library(${PROJECT_NAME} STATIC
-  $<$<PLATFORM_ID:Windows>:src/platform/windows/desktop_integration_windows.cpp>
-  $<$<PLATFORM_ID:Darwin>:src/platform/macos/desktop_integration_macos.mm>
-  $<$<PLATFORM_ID:Linux>:src/platform/linux/desktop_integration_linux.cpp>
+  $<$<PLATFORM_ID:Windows>:${LWP_ROOT_PATH}/src/platform/windows/desktop_integration_windows.cpp>
+  $<$<PLATFORM_ID:Darwin>:${LWP_ROOT_PATH}/src/platform/macos/desktop_integration_macos.mm>
+  $<$<PLATFORM_ID:Linux>:${LWP_ROOT_PATH}/src/platform/linux/desktop_integration_linux.cpp>
 )
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_20)
 
-target_include_directories(${PROJECT_NAME}
-  PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+target_include_directories(${PROJECT_NAME} PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
 # Platform links

@@ -1,5 +1,3 @@
-#set(INCLUDE_PATH "${LWP_ROOT_PATH}/include")
-
 # Try to find raylib first, then fetch a specific tag for determinism
 find_package(raylib 5.5 QUIET)
 if(NOT raylib_FOUND)
@@ -17,7 +15,6 @@ function(add_example example_name source_file)
 
   # Link: rely on transitive include paths from raylib and your library
   target_link_libraries(${example_name} PRIVATE raylib ${PROJECT_NAME})
-  #target_include_directories(${example_name} PRIVATE ${INCLUDE_PATH})
 
   if(MSVC)
     target_compile_definitions(${example_name} PRIVATE

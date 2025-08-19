@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "lumin.h"
+#include <lumin.h>
 #include "raylib.h"
 
 int main()
