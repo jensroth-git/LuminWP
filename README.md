@@ -41,6 +41,8 @@ along with the info for which montors desktop should be replaced.
 
 ### RayLib integration
 ```cpp
+#include <iostream>
+
 #include <lumin.h>
 #include <raylib.h>
 
