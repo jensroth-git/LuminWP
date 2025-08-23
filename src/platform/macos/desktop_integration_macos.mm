@@ -9,36 +9,35 @@
 #include <iostream>
 #include <unistd.h>
 
+// Global state
+static NSWindow* g_desktopWindow = nil;
+static bool g_currentMouseState[5] = {false};
+static bool g_previousMouseState[5] = {false};
+
+// Custom window class for desktop background
+@interface DesktopWindow : NSWindow
+@end
+
+@implementation DesktopWindow
+- (BOOL)canBecomeKeyWindow {
+    return NO;
+}
+
+- (BOOL)canBecomeMainWindow {
+    return NO;
+}
+
+- (BOOL)acceptsFirstResponder {
+    return NO;
+}
+
+- (NSWindowLevel)level {
+    return kCGDesktopWindowLevel;
+}
+@end
+
 namespace lumin {
-    // Global state
-    static NSWindow* g_desktopWindow = nil;
     static MonitorInfo g_selectedMonitor = {0, 0, 0, 0};
-    static bool g_currentMouseState[5] = {false};
-    static bool g_previousMouseState[5] = {false};
-
-    // Custom window class for desktop background
-    @interface DesktopWindow : NSWindow
-    @end
-
-    @implementation DesktopWindow
-
-    - (BOOL)canBecomeKeyWindow {
-        return NO;
-    }
-
-    - (BOOL)canBecomeMainWindow {
-        return NO;
-    }
-
-    - (BOOL)acceptsFirstResponder {
-        return NO;
-    }
-
-    - (NSWindowLevel)level {
-        return kCGDesktopWindowLevel;
-    }
-
-    @end
 
     bool Initialize() {
         // Hide the app from the dock since this is a wallpaper replacement
@@ -121,6 +120,9 @@ namespace lumin {
                                             NSWindowCollectionBehaviorStationary |
                                             NSWindowCollectionBehaviorIgnoresCycle];
         
+        // Set the window to be borderless
+        [engineWindow setStyleMask:NSWindowStyleMaskBorderless];
+
         // Use logical coordinates directly - engine handles high DPI internally
         NSRect screenFrame = NSMakeRect(monitor.x, monitor.y, monitor.width, monitor.height);
         

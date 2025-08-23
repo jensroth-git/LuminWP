@@ -39,7 +39,7 @@ target_link_libraries(myApp PRIVATE lumin)
 ### General integration
 The only requirement is that you get a handle to the window the engine is using to render and pass it into 
 `lumin::ConfigureWallpaperWindow(engineWindowHandle, monitorInfo);`  
-along with the info for which montors desktop should be replaced.
+along with the info for which monitors desktop should be replaced.
 
 - `HWND` on Windows 
 - `NSWindow` on macOS
