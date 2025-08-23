@@ -4,6 +4,10 @@
 This library allows users to create dynamic wallpapers on Windows, macOS and Linux   
 using the game or render engine of your choice!
 
+## Previews
+![Matrix](images/matrix.webp)
+![Wave](images/wave.webp)
+
 ## Features
 
 - Supports Windows 11 24H2 and prior!
