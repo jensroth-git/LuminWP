@@ -69,17 +69,13 @@ int main()
 		DrawCircle((int)circleX, (int)circleY, circleRadius, RED);
 
 		// Attempt to display the mouse position.
-		// Note: In a wallpaper window (child of WorkerW), input may not be delivered normally.
+		// Note: In a wallpaper window, engine input may not be delivered normally.
 		int mouseX = lumin::GetMouseX();
 		int mouseY = lumin::GetMouseY();
 
 		// check buttons
 		if (lumin::IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
 			DrawCircle(mouseX, mouseY, 10, BLUE);
-		}
-		else if (lumin::IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) {
-			// exit on right click
-			break;
 		}
 
 		DrawText(TextFormat("Mouse: %d, %d", mouseX, mouseY), mouseX, mouseY, 30, DARKGRAY);
